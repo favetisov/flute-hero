@@ -1,0 +1,123 @@
+"use client";
+
+import styles from "./page.module.css";
+import { Composition } from "@/models/composition.model";
+import { CompositionComponent } from "@/components/CompositionComponent";
+import { useCompositionStore } from "@/store/composition.store";
+import { useEffect } from "react";
+
+export default function Home() {
+  const store = useCompositionStore();
+
+  const compositions = [
+    new Composition(
+      { title: "Спать пора" },
+      `
+            E5_4 E5_4 G5_2
+            E5_4 E5_4 G5_2
+            E5_4 E5_4 G5_4 G5_4
+            E5_4 E5_4 G5_2
+    
+            E5_4 E5_4 G5_2
+            E5_4 E5_4 G5_2
+            E5_4 E5_4 G5_4 G5_4
+            E5_4 E5_4 G5_2
+    
+            E5_4 E5_4 G5_2
+            E5_4 E5_4 G5_2
+            E5_4 E5_4 G5_4 G5_4
+            E5_4 E5_4 G5_2
+          `
+    ),
+    new Composition(
+      { title: "Упражнение ЗО-ВИ-Ё" },
+      `
+            E5_4 E5_4 G5_4 G5_4
+            E5_4 E5_4 C5_4 C5_4
+          `
+    ),
+    new Composition(
+      { title: "мажорная гамма" },
+      `C5_4 D5_4 E5_4 F5_4 G5_4 A5_4 A5_4       G5_4 F5_4 E5_4 D5_4 C5_4`
+    ),
+    new Composition(
+      { title: "Упражнение ВИ-ЗО-РА" },
+      `E5_4 G5_4 A5_4 G5_4 
+      E5_4 G5_4 A5_4  G5_4 
+      A5_4 G5_4 E5_4 A5_4      
+      `
+    ),
+  ];
+
+  useEffect(() => {
+    store.setComposition(compositions[0]);
+    store.startListening();
+    return () => {
+      store.stopListening();
+    };
+  }, []);
+
+  return (
+    <div className={styles.page}>
+      <p
+        style={{ padding: 40, display: "flex", gap: 20, alignItems: "center" }}
+      >
+        <select
+          onChange={(e) => store.setComposition(compositions[+e.target.value])}
+          disabled={store.running}
+        >
+          {compositions.map((i, index) => (
+            <option key={index} value={index}>
+              {i.title}
+            </option>
+          ))}
+        </select>
+        <input
+          type="range"
+          min={40}
+          max={240}
+          value={store.beatsPerMinute}
+          onChange={(e) => store.setSpeed(+e.target.value)}
+          disabled={store.running}
+        />
+        <span>{store.beatsPerMinute} BPM</span>
+
+        <button onClick={store.toggleRunning}>
+          {store.running ? "Stop" : "Start"}
+        </button>
+      </p>
+
+      {store.composition && (
+        <CompositionComponent composition={store.composition} />
+      )}
+
+      {/* <div style={{ padding: 100 }}>
+        <FrogIcon height={200} isEating={Boolean(store.currentPlayedNote)} />
+      </div> */}
+
+      {/* {store.currentPlayedNote?.aliasVesnyanka && (
+        <div style={{ padding: 80, fontSize: 50 }}>
+          Ты играешь: {store.currentPlayedNote.aliasVesnyanka.toUpperCase()}
+        </div>
+      )} */}
+
+      <div style={{ height: 100 }}>
+        <b>Съедено комариков: </b>
+        {Object.keys(store.processedNotesIds || {}).length}
+      </div>
+
+      {/* <img src="/frog-happy.png" className={styles.praise} />
+      <img src="/frog-fast.png" className={styles.praise} />
+      <img src="/frog-flute.png" className={styles.praise} /> */}
+
+      {store.displayingAward && (
+        <div className={styles.praiseContainer}>
+          <img
+            src={`/${store.displayingAward}.png`}
+            className={styles.praise}
+          />
+        </div>
+      )}
+    </div>
+  );
+}

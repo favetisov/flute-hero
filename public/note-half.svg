@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100.26458mm"
+   height="100.26458mm"
+   viewBox="0 0 100.26458 100.26458"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940, 2025-05-08)"
+   sodipodi:docname="note-half.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showguides="true"
+     inkscape:zoom="1.0710599"
+     inkscape:cx="-87.296707"
+     inkscape:cy="161.05542"
+     inkscape:window-width="1968"
+     inkscape:window-height="912"
+     inkscape:window-x="3419"
+     inkscape:window-y="200"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1">
+    <sodipodi:guide
+       position="49.908576,51.25933"
+       orientation="1,0"
+       id="guide1"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-3.9087578,25.268551"
+       orientation="0,-1"
+       id="guide2"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-83.407056,75.273889"
+       orientation="0,-1"
+       id="guide3"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-22.828329,-42.508864)">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+       id="rect1"
+       width="100"
+       height="100"
+       x="22.960621"
+       y="42.641155" />
+    <ellipse
+       style="fill:none;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
+       id="path1"
+       cx="50.696629"
+       cy="128.56116"
+       rx="16.528502"
+       ry="13.247108"
+       transform="rotate(-10.221509)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.45806;stroke-dasharray:none;stroke-opacity:1"
+       d="M 89.127252,117.59812 V 67.339409 l -0.08582,0.201141 z"
+       id="path3" />
+  </g>
+</svg>

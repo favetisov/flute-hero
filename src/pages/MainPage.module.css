@@ -1,0 +1,64 @@
+.welcome {
+    text-align: center;
+    width: 100%;
+    font-weight: 500;    
+    font-size: 30px;
+}
+
+.welcome div {
+    margin: 20px;
+}
+
+
+.welcome img {
+    height: 150px;
+    object-fit: contain;
+    margin: 20px;
+}
+
+.title {
+    padding: 20px;
+    display: flex;
+}
+
+.title img {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+.gallery img {
+    height: 90px;
+}
+
+.startButton {    
+    width: 200px;    
+}
+
+
+.buttonWrapper {
+    display: block;
+    position: relative;
+    height: 105px;
+}
+
+.buttonWrapper button {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);    
+    z-index: 2;
+}
+
+.buttonWrapper img {
+    position: absolute;
+    top: -20px;
+    height: 90px;
+}

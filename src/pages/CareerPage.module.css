@@ -1,0 +1,55 @@
+.page {
+    margin-top: 20px;
+}
+
+.compositionCard {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    margin: 20px;
+    border-radius: 6px;    
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.compositionCard:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.compositionCard h2 {
+    font-size: 30px;
+    flex: 1;
+    color: rgba(0,0,0,0.7);
+}
+
+.compositionCard .titleImg {
+    height: 120px;
+    width: 120px;
+    object-fit: contain;
+    margin-right: 30px;
+}
+
+.speedIndicators {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-right: 60px;
+}
+
+.speedIndicators img {
+    height: 60px;    
+    opacity: 0.25;
+    transition: all 0.2s ease;
+}
+
+.prizeImg {
+    height: 60px;
+    opacity: 0.2;
+    transition: all 0.2s ease;
+}
+
+.completedImg {
+    opacity: 1;
+}

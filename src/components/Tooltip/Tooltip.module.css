@@ -1,0 +1,47 @@
+.root {
+  position: relative;
+}
+
+.content {
+  pointer-events: none;
+  position: fixed;
+  z-index: 1001;
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+}
+
+.displayed {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.arrow {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgb(2, 4, 1);
+  transition-property: border-color;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+}
+
+.tooltip {
+  font-size: 13px;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-weight: 500;
+  white-space: pre-line;
+  background: rgb(8, 36, 5);
+  color: white;
+  border: 1px solid rgba(0,0,0,.1)
+}
+
+.label {
+  text-wrap: nowrap;
+}

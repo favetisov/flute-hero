@@ -1,0 +1,28 @@
+import { NoteName } from "@/models/note.model";
+
+export const noteByFrequency = {
+  261.63: { name: NoteName.C, octave: 4 },
+  277.18: { name: NoteName["C#"], octave: 4 },
+  293.66: { name: NoteName.D, octave: 4 },
+  311.13: { name: NoteName["D#"], octave: 4 },
+  329.63: { name: NoteName.E, octave: 4 },
+  349.23: { name: NoteName.F, octave: 4 },
+  369.99: { name: NoteName["F#"], octave: 4 },
+  392.0: { name: NoteName.G, octave: 4 },
+  415.3: { name: NoteName["G#"], octave: 4 },
+  440.0: { name: NoteName.A, octave: 4 },
+  466.16: { name: NoteName["A#"], octave: 4 },
+  493.88: { name: NoteName.B, octave: 4 },
+  523.25: { name: NoteName.C, octave: 5 },
+  554.37: { name: NoteName["C#"], octave: 5 },
+  587.33: { name: NoteName.D, octave: 5 },
+  622.25: { name: NoteName["D#"], octave: 5 },
+  659.25: { name: NoteName.E, octave: 5 },
+  698.46: { name: NoteName.F, octave: 5 },
+  739.99: { name: NoteName["F#"], octave: 5 },
+  783.99: { name: NoteName.G, octave: 5 },
+  830.61: { name: NoteName["G#"], octave: 5 },
+  880.0: { name: NoteName.A, octave: 5 },
+  932.33: { name: NoteName["A#"], octave: 5 },
+  987.77: { name: NoteName.B, octave: 5 },
+};
