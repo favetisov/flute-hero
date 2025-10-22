@@ -10,6 +10,9 @@ import { Tooltip } from "@/components/Tooltip/Tooltip";
 import g from "../global.module.css";
 import { CheckIcon } from "@/icons/check.icon";
 import { AwardGraphicsComponent } from "@/components/AwardGraphicsComponent/AwardGraphicsComponent";
+import { Speed } from "@/models/speed.enum";
+import { classNames } from "@/tools/class-names";
+import { HomeIcon } from "@/icons/home.icon";
 
 export const CompositionPage = ({ compositionId }) => {
   const store = useCompositionStore();
@@ -61,14 +64,72 @@ export const CompositionPage = ({ compositionId }) => {
     return null;
   };
 
+  const renderBackgrounds = () => (
+    <>
+      {store.currentTool?.theme?.coverBottomCenter && (
+        <div
+          className={classNames(s.background, s.backgroundBottomCenter)}
+          style={{
+            backgroundImage: `url(${store.currentTool?.theme?.coverBottomCenter})`,
+          }}
+        ></div>
+      )}
+      {store.currentTool?.theme?.coverBottomFullWidth && (
+        <div
+          className={classNames(s.background, s.backgroundBottomFullWidth)}
+          style={{
+            backgroundImage: `url(${store.currentTool?.theme?.coverBottomFullWidth})`,
+          }}
+        ></div>
+      )}
+      {store.currentTool?.theme?.coverTopRight && (
+        <div
+          className={classNames(s.background, s.backgroundTopRight)}
+          style={{
+            backgroundImage: `url(${store.currentTool?.theme?.coverTopRight})`,
+          }}
+        ></div>
+      )}
+      {store.currentTool?.theme?.coverFullscreen && (
+        <div
+          className={classNames(s.background, s.backgroundFullscreen)}
+          style={{
+            backgroundImage: `url(${store.currentTool?.theme?.coverFullscreen})`,
+          }}
+        ></div>
+      )}
+    </>
+  );
+
   return (
     <div className={s.compositionPage}>
-      <div
-        className={s.background}
-        style={{ backgroundImage: `url(${store.currentTool?.theme?.cover})` }}
-      ></div>
+      {renderBackgrounds()}
+
+      {appStore.moneyToadPosition == composition._id && (
+        <div className={s.moneyToad}>
+          <Tooltip
+            label={
+              <div className={g.tooltip}>
+                <h4>Денежная жаба!</h4>
+                <div>Дополнительная награда за композицию</div>
+              </div>
+            }
+          >
+            <img src={"/frog/old-frog.png"} />
+          </Tooltip>
+        </div>
+      )}
+
       <h1 className={s.header}>
-        {store.composition?.title}
+        <span className={s.titleWrapper}>
+          <Tooltip label={"К списку заданий"}>
+            <a href="/career">
+              <HomeIcon width={50} height={50} />
+            </a>
+          </Tooltip>
+          {store.composition?.title}
+        </span>
+
         <img src={store.composition?.cover} />
       </h1>
       <div className={s.controls}>
@@ -78,24 +139,26 @@ export const CompositionPage = ({ compositionId }) => {
             {renderCheckMark("slow")}
             <img
               src={"/frog/frog-speed-slow.png"}
-              className={store.beatsPerMinute === 40 ? s.selected : ""}
-              onClick={() => store.setSpeed(40)}
+              className={store.beatsPerMinute === Speed.slow ? s.selected : ""}
+              onClick={() => store.setSpeed(Speed.slow)}
             />
           </div>
           <div className={s.speedContainer}>
             {renderCheckMark("normal")}
             <img
               src={"/frog/frog-speed-normal.png"}
-              className={store.beatsPerMinute === 60 ? s.selected : ""}
-              onClick={() => store.setSpeed(60)}
+              className={
+                store.beatsPerMinute === Speed.normal ? s.selected : ""
+              }
+              onClick={() => store.setSpeed(Speed.normal)}
             />
           </div>
           <div className={s.speedContainer}>
             {renderCheckMark("fast")}
             <img
               src={"/frog/frog-speed-fast.png"}
-              className={store.beatsPerMinute === 80 ? s.selected : ""}
-              onClick={() => store.setSpeed(80)}
+              className={store.beatsPerMinute === Speed.fast ? s.selected : ""}
+              onClick={() => store.setSpeed(Speed.fast)}
             />
           </div>
         </div>
@@ -129,10 +192,14 @@ export const CompositionPage = ({ compositionId }) => {
       </div>
 
       {!store.running && (
-        <p className={s.pressStartMsg}>Нажми на пробел чтобы начать</p>
+        <p className={s.pressStartMsg} onClick={store.toggleRunning}>
+          Нажми на пробел чтобы начать
+        </p>
       )}
 
-      <AwardGraphicsComponent graphicsData={store.currentShowingGraphics} />
+      <AwardGraphicsComponent graphicsData={store.awardData} />
+
+      {/* <img src={"/pig.png"} /> */}
     </div>
   );
 };

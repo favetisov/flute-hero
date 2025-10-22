@@ -3,6 +3,7 @@ import { Tool } from "@/models/tool.model";
 import { toolsList } from "@/tools/tools.list";
 import { compositionsList } from "@/tools/composition.list";
 import { Speed } from "@/models/speed.enum";
+import { random } from "lodash";
 
 interface AppState {
   money: number;
@@ -18,16 +19,54 @@ interface AppState {
     };
   };
   inventory: Array<Tool>; // список купленных инструментов
+  addToolToInventory: (tool: Tool) => void;
   saveToLocalStorage: () => void;
   loadFromLocalStorage: () => void;
+  addMoney: (amount: number) => void;
+  completeComposition: (compositionId: number, speed: string) => void;
+  moneyToadPosition?: number;
+  relocateMoneyToad: (idToExclude: number) => void;
 }
 
 export const useAppStore = create<AppState>((set, get) => {
+  const generateRandomToadPosition = () => {
+    let position = random(1, compositionsList.length);
+    return position;
+  };
+
   return {
     money: 0,
     compositionsStatuses: {},
-    inventory: [toolsList[0], toolsList[1]], // по умолчанию в инвентаре есть простая флейта
-    currentTool: toolsList[0],
+    inventory: [toolsList["simple-flute"]], // по умолчанию в инвентаре есть простая флейта
+    currentTool: toolsList["simple-flute"],
+    moneyToadPosition: generateRandomToadPosition(),
+
+    addToolToInventory: (tool: Tool) => {
+      const inventory = get().inventory;
+      if (!inventory.find((item) => item._id === tool._id)) {
+        inventory.push(tool);
+        set({ inventory });
+        get().saveToLocalStorage();
+      }
+    },
+
+    addMoney: (amount: number) => {
+      const newAmount = get().money + amount;
+      set({ money: newAmount });
+      get().saveToLocalStorage();
+    },
+
+    completeComposition: (compositionId: number, speed: string) => {
+      const compositionsStatuses = get().compositionsStatuses;
+      if (
+        compositionsStatuses[compositionId] &&
+        !compositionsStatuses[compositionId].completed[speed]
+      ) {
+        compositionsStatuses[compositionId].completed[speed] = true;
+        set({ compositionsStatuses });
+        get().saveToLocalStorage();
+      }
+    },
 
     saveToLocalStorage: () => {
       const state = get();
@@ -35,6 +74,7 @@ export const useAppStore = create<AppState>((set, get) => {
         money: state.money,
         compositionsStatuses: state.compositionsStatuses,
         inventory: state.inventory.map((item) => item._id), // сохраняем только коды инструментов
+        moneyToadPosition: state.moneyToadPosition,
       };
       localStorage.setItem("appState", JSON.stringify(data));
     },
@@ -46,7 +86,7 @@ export const useAppStore = create<AppState>((set, get) => {
         (acc, composition) => {
           acc[composition._id] = {
             currentBpm: Speed.slow,
-            currentToolId: toolsList[0]._id,
+            currentToolId: get().inventory[0]._id,
             completed: {
               slow: false,
               normal: false,
@@ -60,7 +100,7 @@ export const useAppStore = create<AppState>((set, get) => {
 
       if (dataString) {
         const data = JSON.parse(dataString);
-        const inventoryItems = toolsList.filter((tool) =>
+        const inventoryItems = Object.values(toolsList).filter((tool) =>
           data.inventory.includes(tool._id)
         );
 
@@ -73,12 +113,26 @@ export const useAppStore = create<AppState>((set, get) => {
           );
         }
 
+        get().money = data.money || 0;
+        get().inventory = inventoryItems;
+        get().moneyToadPosition =
+          data.moneyToadPosition || get().moneyToadPosition;
+
         set({
-          money: data.money || 0,
+          money: get().money,
           compositionsStatuses: get().compositionsStatuses,
-          inventory: inventoryItems,
+          inventory: get().inventory,
         });
       }
+    },
+    relocateMoneyToad: (idToExclude: number) => {
+      let random = generateRandomToadPosition();
+      while (random === idToExclude) {
+        random = generateRandomToadPosition();
+      }
+
+      set({ moneyToadPosition: random });
+      get().saveToLocalStorage();
     },
   };
 });

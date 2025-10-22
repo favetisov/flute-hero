@@ -19,7 +19,7 @@ export function NoteIcon({
       <ellipse
         style={{
           fill: [NoteDuration.whole, NoteDuration.half].includes(note.duration)
-            ? "var(--background)"
+            ? "var(--note-empty-color)"
             : fill,
           stroke: fill,
           strokeWidth: 3,

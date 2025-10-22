@@ -51,5 +51,11 @@
 }
 
 .completedImg {
-    opacity: 1;
+    opacity: 1 !important;
+}
+
+.moneyToadImg {
+    height: 80px;
+    margin-right: 40px;
+    transform: scaleX(-1);
 }

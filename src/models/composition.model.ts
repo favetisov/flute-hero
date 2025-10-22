@@ -1,12 +1,14 @@
 import { Note, NoteDuration } from "./note.model";
 import { chunk, range } from "lodash";
+import { Tool } from "./tool.model";
 
 export class Composition {
-  _id?: string;
+  _id?: number;
   title?: string;
   notes?: Array<Note | null> = Array(1024).fill(null);
   cover: string;
   clef: Note = new Note({ name: "G", octave: 5 });
+  prize: Tool;
 
   constructor(model?, melody?: string) {
     if (model) {
@@ -15,6 +17,7 @@ export class Composition {
       this.notes = model.notes;
       this.cover = model.cover;
       this.clef = model.clefStr ? new Note(model.clefStr) : this.clef;
+      this.prize = model.prize;
     }
 
     if (melody) {

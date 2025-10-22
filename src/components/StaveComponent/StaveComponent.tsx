@@ -11,6 +11,7 @@ import { NoteIcon } from "@/icons/note.icon";
 import { MosquitoIcon } from "@/icons/mosquito.icon";
 import g from "../../global.module.css";
 import { classNames } from "@/tools/class-names";
+import { FluteIcon } from "@/icons/flute.icon";
 const LINE_SPACING = 30;
 
 export const StaveComponent = () => {
@@ -113,15 +114,27 @@ export const StaveComponent = () => {
                       className={s.noteSignContainer}
                       style={{ top: getNotePosition(i.note) }}
                     >
-                      <NoteIcon
-                        height={42}
-                        note={i.note}
-                        className={classNames(
-                          s.noteSign,
-                          store.processedNotesIds?.[i.note._id] &&
-                            s.noteSignProcessed
-                        )}
-                      />
+                      <Tooltip
+                        label={
+                          <div className={g.tooltip}>
+                            <h4>
+                              Звук {i.note.aliasVesnyanka || i.note.name} (
+                              {i.note.alias} {i.note.octave} октавы)
+                            </h4>
+                            <FluteIcon height={300} note={i.note} />
+                          </div>
+                        }
+                      >
+                        <NoteIcon
+                          height={42}
+                          note={i.note}
+                          className={classNames(
+                            s.noteSign,
+                            store.processedNotesIds?.[i.note._id] &&
+                              s.noteSignProcessed
+                          )}
+                        />
+                      </Tooltip>
                       {!store.processedNotesIds?.[i.note._id] && (
                         <MosquitoIcon className={s.mosquito} height={12} />
                       )}

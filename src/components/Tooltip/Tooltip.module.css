@@ -23,7 +23,7 @@
   height: 5px;
   transform: translateX(-50%);
   border: 5px solid transparent;
-  border-top-color: rgb(2, 4, 1);
+  border-top-color: rgb(0, 0, 0);
   transition-property: border-color;
   transition-timing-function: ease-in-out;
   transition-delay: 0s;
@@ -37,7 +37,7 @@
   border-radius: 10px;
   font-weight: 500;
   white-space: pre-line;
-  background: rgb(8, 36, 5);
+  background: rgb(0,0,0);
   color: white;
   border: 1px solid rgba(0,0,0,.1)
 }

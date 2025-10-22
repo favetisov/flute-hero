@@ -35,14 +35,12 @@ interface CompositionState {
   metronomeEnabled?: boolean;
   toggleMetronome?: () => void;
 
-  displayingAward?: string; // показываем награду в конце песни
-
   currentTool?: Tool;
   selectTool?: (tool: Tool) => void;
 
   initialize: (composition: Composition) => Promise<void>;
 
-  currentShowingGraphics?: any; // в конце композиции отображаем графику с наградами и проч
+  awardData?: any; // в конце композиции отображаем графику с наградами и проч
 }
 
 export const useCompositionStore = create<CompositionState>((set, get) => {
@@ -80,28 +78,38 @@ export const useCompositionStore = create<CompositionState>((set, get) => {
 
     if (processedNotes < totalNotes) {
       return {
+        composition: get().composition,
         completed: false,
         totalNotes,
         processedNotes,
       };
     } else {
-      // текущая скорость пройдена первый раз
-      const speedCompletedFirstTime =
-        !compositionData.completed[get().beatsPerMinute];
+      const speedName = (() => {
+        switch (get().beatsPerMinute) {
+          case Speed.slow:
+            return "slow";
+          case Speed.normal:
+            return "normal";
+          case Speed.fast:
+            return "fast";
+        }
+      })();
 
-      // впервые пройдены все скорости
-      const wholeCompletedFirstTime =
-        speedCompletedFirstTime &&
-        !Object.values(Speed).some(
-          (speed) =>
-            speed != get().beatsPerMinute && !compositionData.completed[speed]
-        );
+      // текущая скорость пройдена первый раз
+      const speedCompletedFirstTime = !compositionData.completed[speedName];
+
+      as.completeComposition(get().composition!._id, speedName);
+
+      console.log(get().composition, get().composition?.prize);
 
       return {
+        composition: get().composition,
         completed: true,
         speedCompletedFirstTime,
-        wholeCompletedFirstTime,
         speed: get().beatsPerMinute,
+        tool: get().composition.prize,
+        totalNotes,
+        processedNotes,
       };
     }
   };
@@ -116,19 +124,19 @@ export const useCompositionStore = create<CompositionState>((set, get) => {
         playMetronomeClick();
       }
 
-      // если песня закончилась - тормозим (к длине песни добавляем паузу в 1 такт)
-      if (get().currentBeat >= get().composition.notes?.length + 16) {
+      // если песня закончилась - тормозим (к длине песни добавляем паузу в пол такта)
+      if (get().currentBeat >= get().composition.notes?.length + 8) {
         clearInterval(get().intervalId);
 
-        // считаем количество съеденных комариков. Если есть пропущенные - показываем количество съеденных и
+        const awardData = processCompositionResults();
 
         set({
           running: false,
-          displayingAward:
-            Object.keys(get().processedNotesIds).length ==
-            get().composition.notes.filter((n) => n).length
-              ? "frog-celebrate"
-              : "frog-happy",
+          currentNote: null,
+          curentNoteTillBeat: -1,
+          currentBeat: INITIAL_BEAT,
+          processedNotesIds: {},
+          awardData,
         });
       } else {
         set({
@@ -189,7 +197,6 @@ export const useCompositionStore = create<CompositionState>((set, get) => {
     lastPlayedNote: null,
     processedNotesIds: {},
     metronomeEnabled: true,
-    displayingAward: null,
     currentTool: toolsList[0],
 
     initialize: async (composition: Composition) => {
@@ -201,6 +208,8 @@ export const useCompositionStore = create<CompositionState>((set, get) => {
         return;
       }
 
+      set({ awardData: null });
+
       if (!isServerSide()) {
         get().composition = composition;
         set({ composition });
@@ -209,17 +218,20 @@ export const useCompositionStore = create<CompositionState>((set, get) => {
         const as = useAppStore.getState();
         // на всякий случай загружаем состояние приложения
         await as.loadFromLocalStorage();
-        console.log(as.compositionsStatuses[composition._id], "com sta");
 
         get().beatsPerMinute =
           as.compositionsStatuses[composition._id]?.currentBpm || Speed.slow;
         const toolId = as.compositionsStatuses[composition._id]?.currentToolId;
         if (toolId) {
           const tool = as.inventory.find((t) => t._id === toolId);
+
           if (tool) {
             get().currentTool = tool;
             get().selectTool(tool);
           }
+        } else {
+          get().currentTool = as.inventory[0];
+          get().selectTool(as.inventory[0]);
         }
       }
     },
@@ -337,6 +349,10 @@ export const useCompositionStore = create<CompositionState>((set, get) => {
         document.documentElement.style.setProperty(
           "--note-color",
           tool.theme.noteColor
+        );
+        document.documentElement.style.setProperty(
+          "--note-empty-color",
+          tool.theme.noteEmptyColor
         );
         document.documentElement.style.setProperty(
           "--note-filter",

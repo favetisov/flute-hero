@@ -1,22 +1,66 @@
 .awardModal{
     position: absolute;
-    top: 0;
+    top: -10px;
     left: 0;
+    right: 0;
+    bottom: -10px;
     width: 100vw;
     height: 100vh;
     background: #fff8e2;
     display: flex;
     align-items: center;
     justify-content: center;
-    display: none;
+    overflow: hidden;
 }
 
 .mainImg{
-    height: 30px;
+    height: 230px;
 }
 
 .checkIcon {
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(120px, -160px);
+}
+
+.prizeCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+}
+
+.prizeCard h2 {
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.prizeCard .prizeName {
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.moneyContainer {
+    position: relative;
+}
+
+.moneyContainer .coin {
+    position: absolute;
+    top: 70px;
+    left: 160px;
+    font-size: 40px;
+    font-weight: 900;
+    height: 88px;
+    width: 75px;
+    max-width: 75px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: skewX(1deg) rotate(-5deg);
+    color: #5b3a00;
 }
