@@ -11,6 +11,8 @@ export function FluteIcon({ height = 100, note, ...restProps }) {
     F5: [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
     G5: [1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
     A5: [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    B5: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    C6: [1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
   };
 
   const config = notesConfigs[note?.name + note?.octave];
@@ -30,65 +32,67 @@ export function FluteIcon({ height = 100, note, ...restProps }) {
       />
 
       <circle
-        fill={config[9] ? "#ff5" : "#333"}
+        fill={config?.[9] ? "#ff5" : "#333"}
+        cx="29.73382"
+        cy="57.795853"
+        r="7.6799998"
+      />
+
+      <circle
+        fill={config?.[8] ? "#ff5" : "#333"}
+        cx="57.53754"
+        cy="58.232903"
+        r="12.8"
+      />
+
+      <circle
+        fill={config?.[7] ? "#ff5" : "#333"}
         cx="29.498522"
         cy="102.79177"
         r="7.6799998"
       />
 
       <circle
-        fill={config[8] ? "#ff5" : "#333"}
-        cx="57.53754"
-        cy="58.232903"
-        r="12.8"
-      />
-      <circle
-        fill={config[7] ? "#ff5" : "#333"}
-        cx="29.73382"
-        cy="57.795853"
-        r="7.6799998"
-      />
-      <circle
-        fill={config[6] ? "#ff5" : "#333"}
+        fill={config?.[6] ? "#ff5" : "#333"}
         cx="57.526962"
         cy="102.33922"
         r="12.8"
       />
 
       <circle
-        fill={config[5] ? "#ff5" : "#333"}
+        fill={config?.[5] ? "#ff5" : "#333"}
         cx="44.029301"
         cy="167.34538"
         r="16.423979"
       />
 
       <circle
-        fill={config[4] ? "#ff5" : "#333"}
+        fill={config?.[4] ? "#ff5" : "#333"}
         cx="43.842133"
         cy="224.66725"
         r="16.423979"
       />
       <circle
-        fill={config[3] ? "#ff5" : "#333"}
+        fill={config?.[3] ? "#ff5" : "#333"}
         cx="43.624622"
         cy="281.65292"
         r="16.423979"
       />
       <circle
-        fill={config[2] ? "#ff5" : "#333"}
+        fill={config?.[2] ? "#ff5" : "#333"}
         cx="43.870232"
         cy="342.58112"
         r="16.423979"
       />
       <circle
-        fill={config[1] ? "#ff5" : "#333"}
+        fill={config?.[1] ? "#ff5" : "#333"}
         cx="44.025146"
         cy="405.40057"
         r="16.423979"
       />
 
       <circle
-        fill={config[0] ? "#ff5" : "#333"}
+        fill={config?.[0] ? "#ff5" : "#333"}
         cx="97.187294"
         cy="405.72833"
         r="16.423979"

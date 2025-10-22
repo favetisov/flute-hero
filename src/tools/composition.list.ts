@@ -57,8 +57,9 @@ export const compositionsList = [
       prize: toolsList["ice-flute"],
     },
     `
-    E5_4 F5_4 G5_4 A5_4 
-    A5_4 G5_4 F5_4 E5_4
+    C5_4 D5_4 E5_4 F5_4 G5_4 A5_4 B5_4 C6_4
+    C6_4 B5_4 A5_4 G5_4 F5_4 E5_4 D5_4 C5_4
+
     `
   ),
 ];
